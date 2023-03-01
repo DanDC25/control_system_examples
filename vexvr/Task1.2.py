@@ -20,12 +20,12 @@ location = Location("location", 9)
 def driveXDistance(setpoint,duration):
     # reset the timer
     brain.timer_reset()
-
+    TOLERANCE = 10
     # loop while the timer is less than the duration input of the function.
     while(brain.timer_time(SECONDS)<duration):
         # CREDIT: MOTORIZED ARM SIMULATION FROM P5JS https://editor.p5js.org/dcan25/sketches/SpawXnZyI
         robot_Xlocation = location.position(X, MM)
-        k = 10
+        k = 2
         error = setpoint - robot_Xlocation
         output = k*error
         #Here, my output is the velocity the robot will run at. This will make the robot run faster, and smoother.
@@ -34,9 +34,9 @@ def driveXDistance(setpoint,duration):
         if(output < -100):
             output = 0
         drivetrain.set_drive_velocity(output,PERCENT)
-        if(robot_Xlocation < setpoint):
+        if(robot_Xlocation < setpoint - TOLERANCE):
             drivetrain.drive(FORWARD)
-        elif(robot_Xlocation > setpoint):
+        elif(robot_Xlocation > setpoint + TOLERANCE):
             drivetrain.drive(REVERSE)
         else:
             drivetrain.stop()
@@ -58,23 +58,23 @@ def driveXDistance(setpoint,duration):
 def driveYDistance(setpoint,duration):
     # reset the timer
     brain.timer_reset()
-
+    TOLERANCE = 10
     # loop while the timer is less than the duration input of the function.
     while(brain.timer_time(SECONDS)<duration):
         # Your code goes here!
         robot_Ylocation = location.position(Y, MM)
-        k = 10
+        k = 2
         error = setpoint - robot_Ylocation
         output = k*error
-        #Here, my output is the velocity the robot will run at. This will make the robot run faster, and smoother.
+        #Here, my output will determine the velocity my robot will run at. This will make the robot run faster, and smoother. This will make the robot faster when it's not at the setpoint and inturn stop it when it goes past.
         if(output > 100):
             output = 100
         if(output < -100):
             output = 0
         drivetrain.set_drive_velocity(output,PERCENT)
-        if(robot_Ylocation < setpoint):
+        if(robot_Ylocation < setpoint - TOLERANCE):
             drivetrain.drive(FORWARD)
-        elif(robot_Ylocation > setpoint):
+        elif(robot_Ylocation > setpoint + TOLERANCE):
             drivetrain.drive(REVERSE)
         else:
             drivetrain.stop()
@@ -93,12 +93,12 @@ def driveYDistance(setpoint,duration):
 def driveDiagDistance(setpoint,duration):
     # reset the timer
     brain.timer_reset()
-
+    TOLERANCE = 10
     # loop while the timer is less than the duration input of the function.
     while(brain.timer_time(SECONDS)<duration):
         # Your code goes here!
         robot_Ylocation = location.position(Y, MM)
-        k = 10
+        k = 2
         error = setpoint - robot_Ylocation
         output = k*error
         #Here, my output is the velocity the robot will run at. This will make the robot run faster, and smoother.
@@ -107,9 +107,9 @@ def driveDiagDistance(setpoint,duration):
         if(output < -100):
             output = 0
         drivetrain.set_drive_velocity(output,PERCENT)
-        if(robot_Ylocation < setpoint):
+        if(robot_Ylocation < setpoint - TOLERANCE):
             drivetrain.drive(FORWARD)
-        elif(robot_Ylocation > setpoint):
+        elif(robot_Ylocation > setpoint + TOLERANCE):
             drivetrain.drive(REVERSE)
         else:
             drivetrain.stop()
@@ -133,6 +133,7 @@ def main():
     pen.move(DOWN)
     drivetrain.turn_to_heading(90,DEGREES,wait=True)
     driveXDistance(0,3)
+    drivetrain.set_drive_velocity(100,PERCENT)
     drivetrain.turn_to_heading(0,DEGREES,wait=True)
     driveYDistance(0,3)
     drivetrain.turn_to_heading(45,DEGREES,wait=True)
