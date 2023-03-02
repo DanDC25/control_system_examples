@@ -165,7 +165,8 @@ def driveDiagDistance(setpoint,duration):
 def random_locations():
     X_Location = random.randint(-9, 9) * 100
     Y_Location = random.randint(-9, 9) * 100
-    return X_Location, Y_Location
+    DISTANCE_SENSOR = ()
+    return [X_Location,Y_Location]
 
 
 
@@ -193,12 +194,14 @@ def DRIVE_Y_LOCATION(Y_Location):
             drivetrain.drive(REVERSE) 
             wait(5,MSEC)
     drivetrain.stop()
-
+#def DRIVE_TO_LOCATION()
+    #Right_Edge = (,)
 
 # Add project code in "main"
 def main():
     pen.set_pen_color(BLACK)
     pen.move(DOWN)
+    #print("")
     #drivetrain.turn_to_heading(90,DEGREES,wait=True)
     #driveXDistance(0,3)
     #drivetrain.set_drive_velocity(100,PERCENT)
@@ -207,7 +210,7 @@ def main():
     #drivetrain.turn_to_heading(45,DEGREES,wait=True)
     #driveDiagDistance(400,4)
     X_Location, Y_Location = random_locations()
-
+    #brain.print("target location is x = ( " + str(X_Location, Y_Location[0]) + " , " + str(X_Location, Y_Location[1]) + " )" )
 
     drivetrain.turn_to_heading(90,DEGREES,wait=True)
     DRIVE_X_LOCATION(X_Location)
